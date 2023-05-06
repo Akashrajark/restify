@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:restify2/ui/screen/homscreen.dart';
+import 'package:restify2/ui/screen/signup_screen.dart';
 import 'package:restify2/ui/value/color.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool isOb = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,11 +55,20 @@ class LoginScreen extends StatelessWidget {
                 height: 15,
               ),
               TextField(
+                obscureText: isOb,
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
                     ),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isOb = !isOb;
+                      });
+                    },
+                    child: Icon(isOb ? Icons.visibility : Icons.visibility_off),
+                  ),
                   hintText: "Password",
                 ),
               ),
@@ -72,11 +89,24 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 50,
               ),
-              CustomButton(),
+              CustomButton(
+                text: "Login",
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                },
+              ),
               const SizedBox(
                 height: 60,
               ),
-              CustomText(),
+              CustomText(
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => SignUpScreen()));
+                },
+                text: "Dont have an account?",
+                text2: " Sign Up",
+              ),
             ],
           ),
         ),
@@ -86,8 +116,13 @@ class LoginScreen extends StatelessWidget {
 }
 
 class CustomText extends StatelessWidget {
+  final String text, text2;
+  final Function() onTap;
   const CustomText({
     super.key,
+    required this.text,
+    required this.text2,
+    required this.onTap,
   });
 
   @override
@@ -96,18 +131,21 @@ class CustomText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Dont have an account? ",
+          text,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: Colors.black,
                 fontWeight: FontWeight.w500,
               ),
         ),
-        Text(
-          " Sign Up",
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: primaryColor,
-                fontWeight: FontWeight.bold,
-              ),
+        GestureDetector(
+          onTap: onTap,
+          child: Text(
+            text2,
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
         ),
       ],
     );
@@ -115,8 +153,12 @@ class CustomText extends StatelessWidget {
 }
 
 class CustomButton extends StatelessWidget {
+  final String text;
+  final Function() onTap;
   const CustomButton({
     super.key,
+    required this.text,
+    required this.onTap,
   });
 
   @override
@@ -126,15 +168,19 @@ class CustomButton extends StatelessWidget {
       child: Material(
         borderRadius: BorderRadius.circular(8),
         color: primaryColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-          child: Text(
-            "Login",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
           ),
         ),
       ),

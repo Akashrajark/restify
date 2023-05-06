@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:restify2/ui/screen/loginscreen.dart';
-import 'package:restify2/ui/screen/signup_screen.dart';
+import 'package:restify2/ui/screen/splashscreen.dart';
 
-import 'ui/screen/homscreen.dart';
 import 'ui/value/color.dart';
 
 void main() {
@@ -15,6 +13,7 @@ class Myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         inputDecorationTheme: InputDecorationTheme(
           hintStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -22,6 +21,7 @@ class Myapp extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
           fillColor: primaryColor.withOpacity(.5),
+          suffixIconColor: Colors.black,
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(8),
@@ -29,7 +29,7 @@ class Myapp extends StatelessWidget {
           filled: true,
         ),
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }

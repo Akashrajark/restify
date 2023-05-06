@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:restify2/ui/value/color.dart';
 
+import 'homscreen.dart';
 import 'loginscreen.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  bool isOb = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,12 +55,20 @@ class SignUpScreen extends StatelessWidget {
                 height: 15,
               ),
               TextField(
+                obscureText: isOb,
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
                     ),
-                decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.visibility),
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isOb = !isOb;
+                      });
+                    },
+                    child: Icon(isOb ? Icons.visibility : Icons.visibility_off),
+                  ),
                   hintText: "Password",
                 ),
               ),
@@ -62,23 +76,44 @@ class SignUpScreen extends StatelessWidget {
                 height: 10,
               ),
               TextField(
+                obscureText: isOb,
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
                     ),
-                decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.visibility),
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isOb = !isOb;
+                      });
+                    },
+                    child: Icon(isOb ? Icons.visibility : Icons.visibility_off),
+                  ),
                   hintText: "Confirm Password",
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
-              CustomButton(),
+              CustomButton(
+                text: "Sign up",
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                },
+              ),
               const SizedBox(
                 height: 60,
               ),
-              CustomText(),
+              CustomText(
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                },
+                text: "Already have an account?",
+                text2: "Login",
+              ),
             ],
           ),
         ),
